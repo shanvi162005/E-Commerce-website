@@ -1,83 +1,81 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 function Signup() {
-  // 1. Create states to hold the user's inputs
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
 
-  // 2. Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevents the browser from reloading the page
+  const handleRegisterSubmit = async (e) => {
+    e.preventDefault();
 
     try {
-      // Send data to your Express backend signup route
-      const response = await axios.post('http://localhost:5000/api/auth/signup', {
+      console.log('Sending registration request...');
+      
+      const response = await axios.post('http://localhost:5000/api/auth/register', {
         username,
         email,
         password
       });
 
-      // Display the success message coming from your server
-      setMessage(response.data.message);
-      
-      // Clear inputs upon success
-      setUsername('');
-      setEmail('');
-      setPassword('');
-    } 
-    catch (error) {
-      // Display the error message if the user already exists
-      if (error.response) {
-        setMessage(error.response.data.message);
-      } else {
-        setMessage('Server error. Please check if your backend is running!');
-      }
+      console.log('Registration successful!', response.data);
+      alert('Account registered successfully! 🎉 You can now log in.');
+
+    } catch (err) {
+      console.error('Registration error:', err);
+      alert(err.response?.data?.message || 'Registration failed.');
     }
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '50px auto', fontFamily: 'Arial, sans-serif' }}>
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-        <div>
-          <label>Username</label>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '60px' }}>
+      <h2 style={{ fontSize: '2rem', marginBottom: '20px' }}>Register</h2>
+      
+      <form onSubmit={handleRegisterSubmit} style={{ width: '100%', maxWidth: '400px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+        
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+          <label style={{ fontSize: '1rem', color: '#ccc', textAlign: 'center' }}>Username</label>
           <input 
             type="text" 
             value={username} 
             onChange={(e) => setUsername(e.target.value)} 
-            required 
-            style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+            placeholder="Choose a username"
+            required
+            style={{ padding: '12px', backgroundColor: '#2d3238', color: 'white', border: '1px solid #444', borderRadius: '4px', fontSize: '1rem' }}
           />
         </div>
-        <div>
-          <label>Email</label>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+          <label style={{ fontSize: '1rem', color: '#ccc', textAlign: 'center' }}>Email</label>
           <input 
             type="email" 
             value={email} 
             onChange={(e) => setEmail(e.target.value)} 
-            required 
-            style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+            placeholder="Enter your email"
+            required
+            style={{ padding: '12px', backgroundColor: '#2d3238', color: 'white', border: '1px solid #444', borderRadius: '4px', fontSize: '1rem' }}
           />
         </div>
-        <div>
-          <label>Password</label>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+          <label style={{ fontSize: '1rem', color: '#ccc', textAlign: 'center' }}>Password</label>
           <input 
             type="password" 
             value={password} 
             onChange={(e) => setPassword(e.target.value)} 
-            required 
-            style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+            placeholder="Create a password"
+            required
+            style={{ padding: '12px', backgroundColor: '#2d3238', color: 'white', border: '1px solid #444', borderRadius: '4px', fontSize: '1rem' }}
           />
         </div>
-        <button type="submit" style={{ padding: '10px', background: '#007bff', color: 'white', border: 'none', cursor: 'pointer' }}>
+
+        <button 
+          type="submit" 
+          style={{ padding: '12px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '4px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', marginTop: '10px' }}
+        >
           Register
         </button>
       </form>
-
-      {message && <p style={{ marginTop: '15px', fontWeight: 'bold' }}>{message}</p>}
     </div>
   );
 }
