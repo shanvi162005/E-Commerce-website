@@ -6,18 +6,15 @@ const protect = async (req, res, next) => {
 
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         try {
-            // Extract the token
+            // Extract token
             token = req.headers.authorization.split(' ')[1];
 
-            // Use the same fallback logic as your login route
+            // Verify using the exact same logic as your login route
             const secret = process.env.JWT_SECRET || 'secretkey';
-            
-            // Verify the token here, inside the function scope
             const decoded = jwt.verify(token, secret);
 
-            // Locate user
-            const userId = decoded.id || decoded._id || decoded.userId;
-            req.user = await User.findById(userId).select('-password');
+            // Find user
+            req.user = await User.findById(decoded.id || decoded._id).select('-password');
             
             if (!req.user) {
                 return res.status(401).json({ error: 'Not authorized, user not found' });
