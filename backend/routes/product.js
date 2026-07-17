@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Admin Only: Add a product
+// Add a product
 router.post('/', async (req, res) => {
   try {
     const { name, description, price, image, category } = req.body;
@@ -25,8 +25,8 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Admin Only: Delete a product
-router.delete('/:id', protect, admin, async (req, res) => {
+// Delete a product
+router.delete('/:id', async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     if (product) {
