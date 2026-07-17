@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product');
-const { protect, admin } = require('../middleware/auth');
 
-// // Public: Get all products
+// Public: Get all products for the homepage
 router.get('/', async (req, res) => {
     try {
         const products = await Product.find({});
@@ -13,11 +12,13 @@ router.get('/', async (req, res) => {
     }
 });
 
-// // Add a product
+// Add a product from the admin panel
 router.post('/', async (req, res) => {
     try {
         const { name, description, price, image, category } = req.body;
-        const product = new new Product({ name, description, price, image, category });
+        
+        const product = new Product({ name, description, price, image, category });
+        
         const createdProduct = await product.save();
         res.status(201).json(createdProduct);
     } catch (err) {

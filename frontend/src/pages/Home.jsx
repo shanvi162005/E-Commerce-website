@@ -3,12 +3,15 @@ import axios from 'axios';
 
 function Home() {
   const [products, setProducts] = useState([]);
-
   useEffect(() => {
     axios.get('http://localhost:5000/api/products')
-      .then(res => setProducts(res.data))
-      .catch(err => console.log(err));
+      .then(res => {
+        console.log("Database response payload:", res.data); 
+        setProducts(res.data);
+      })
+      .catch(err => console.log("Fetch error:", err));
   }, []);
+
 
   const addToCart = async (productId) => {
     const token = localStorage.getItem('token');
