@@ -1,60 +1,73 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Login from './pages/Login';
+import Home from './pages/Home';
 import Signup from './pages/Signup';
+import Login from './pages/Login';
+import CartPage from './pages/CartPage';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
+  // A quick helper to log out
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    alert('Logged out successfully!');
+    window.location.href = '/login'; // Redirect to login
+  };
+
+  const token = localStorage.getItem('token');
+
   return (
     <Router>
-      <div style={{ backgroundColor: '#12161a', color: 'white', minHeight: '100vh' }}>
-        
-        {/* HEADER / NAVBAR */}
-        <div style={{ 
-          backgroundColor: '#0f1115', 
-          padding: '20px', 
-          display: 'flex', 
-          justifyContent: 'space-between', 
+      <div style={{ fontFamily: 'Arial, sans-serif' }}>
+        {/* Navigation Bar */}
+        <nav style={{
+          display: 'flex',
+          justifyContent: 'space-between',
           alignItems: 'center',
-          borderBottom: '1px solid #222' 
+          padding: '15px 30px',
+          background: '#333',
+          color: 'white'
         }}>
-          {/* Clicking the title takes you back home */}
-          <Link to="/" style={{ textDecoration: 'none' }}>
-            <h1 style={{ color: '#ffb6c1', margin: 0 }}>My E-Commerce App</h1>
-          </Link>
-          
-          <div>
-            {/* We use Link instead of button so React can switch pages instantly */}
-            <Link to="/login">
-              <button style={{ marginRight: '10px', padding: '8px 16px', backgroundColor: '#333', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-                Login
-              </button>
-            </Link>
+          <h2 style={{ margin: 0 }}>
+            <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>⚡ MyStore</Link>
+          </h2>
+          <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+            <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>Home</Link>
+            <Link to="/cart" style={{ color: 'white', textDecoration: 'none' }}>Cart 🛒</Link>
+            <Link to="/admin" style={{ color: 'white', textDecoration: 'none' }}>Admin Panel 🛠️</Link>
             
-            <Link to="/register">
-              <button style={{ padding: '8px 16px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-                Register
+            {!token ? (
+              <>
+                <Link to="/login" style={{ color: 'white', textDecoration: 'none' }}>Login</Link>
+                <Link to="/signup" style={{ color: '#007bff', textDecoration: 'none', fontWeight: 'bold' }}>Sign Up</Link>
+              </>
+            ) : (
+              <button 
+                onClick={handleLogout} 
+                style={{ 
+                  background: 'red', 
+                  color: 'white', 
+                  border: 'none', 
+                  padding: '5px 10px', 
+                  cursor: 'pointer',
+                  borderRadius: '4px'
+                }}
+              >
+                Logout
               </button>
-            </Link>
+            )}
           </div>
-        </div>
+        </nav>
 
-        {/* PAGE ROUTES */}
-        <Routes>
-          {/* Home / Landing Page */}
-          <Route path="/" element={
-            <div style={{ textAlign: 'center', marginTop: '100px' }}>
-              <h2>Welcome to the Store!</h2>
-              <p>Your frontend is successfully connected and styled.</p>
-            </div>
-          } />
-
-          {/* Login Page */}
-          <Route path="/login" element={<Login />} />
-
-          {/* Register Page */}
-          <Route path="/register" element={<Signup />} />
-        </Routes>
-
+        {/* Page Routing Configuration */}
+        <main style={{ padding: '20px' }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+          </Routes>
+        </main>
       </div>
     </Router>
   );

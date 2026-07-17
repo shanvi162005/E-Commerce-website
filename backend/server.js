@@ -12,8 +12,8 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json()); // Allows parsing of JSON request bodies
-
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/cart', require('./routes/cart'));
 
 // Database Connection
 mongoose.connect(process.env.MONGODB_URI)
