@@ -1,41 +1,36 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-// Middleware to protect routes (checks if user is logged in)
 const protect = async (req, res, next) => {
-  let token;
+    let token;
 
-  // Check if authorization header is sent and starts with "Bearer"
-  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-    try {
-      // Get token from header (split "Bearer <token>")
-      token = req.headers.authorization.split(' ')[1];
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+        try {
+            // Get token from header split
+            token = req.headers.authorization.split(' ')[1];
 
-      // Decode and verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            // Verify token using your secret key
+            const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secretkey');
 
-      // Find user in database and attach it to the request object (excluding password)
-      req.user = await User.findById(decoded.id).select('-password');
-      
-      return next(); // Continue to the next step
-    } catch (error) {
-      console.error("Auth Error:", error);
-      return res.status(401).json({ message: 'Not authorized, token failed' });
+            // Find user and attach it to the request object
+            req.user = await User.findById(decoded.id || decoded._id).select('-password');
+            
+            if (!req.user) {
+                console.log("Auth Error: Token is valid but user no longer exists in DB");
+                return res.status(401).json({ error: 'Not authorized, user not found' });
+            }
+
+            next();
+        } catch (error) {
+            console.log(" uth Error: Token verification failed:", error.message);
+            return res.status(401).json({ error: 'Not authorized, token failed' });
+        }
     }
-  }
 
-  if (!token) {
-    return res.status(401).json({ message: 'Not authorized, no token found' });
-  }
+    if (!token) {
+        console.log("❌ Auth Error: No authorization header / token provided");
+        return res.status(401).json({ error: 'Not authorized, no token found' });
+    }
 };
 
-// Middleware to check if the logged-in user is an admin
-const admin = (req, res, next) => {
-  if (req.user && req.user.isAdmin) {
-    next(); // User is an admin, continue!
-  } else {
-    res.status(401).json({ message: 'Not authorized as an admin' });
-  }
-};
-
-module.exports = { protect, admin };
+module.exports = { protect };
