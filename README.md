@@ -1,12 +1,6 @@
-# 🛒 MyStore E-Commerce Website
+# 🛒 My E-Commerce Website
 
-A full-stack, responsive e-commerce platform built with the MERN stack (MongoDB, Express, React, Node.js). This project provides a complete shopping experience with secure authentication, a dynamic product catalog, and real-time cart management.
-
-## 📸 Project Showcase
-
-| Homepage | Login & Register | Cart Page |
-| :---: | :---: | :---: |
-| ![Homepage](assets/home.png) | ![Auth](assets/auth.png) | ![Cart](assets/cart.png) |
+Build a full-stack e-commerce platform that allows users to browse products, add them to a shopping cart, and complete a checkout process. Users will be able to create accounts, log in, and manage their cart. Admins can manage products.
 
 ## ✨ Key Features
 
@@ -37,10 +31,5 @@ A full-stack, responsive e-commerce platform built with the MERN stack (MongoDB,
   <img width="1673" height="660" alt="Screenshot 2026-07-17 215920" src="https://github.com/user-attachments/assets/f08bed56-794c-4d72-b36f-c42e8d8df4fa" />
 
 
-
-
-
-
-   ```bash
    git clone <your-repo-link>
    cd <your-folder-name>
