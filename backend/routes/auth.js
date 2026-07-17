@@ -4,6 +4,13 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
+// Look for your jwt.sign line and update the secret argument like this:
+const token = jwt.sign(
+    { id: user._id }, 
+    process.env.JWT_SECRET || 'secretkey', // 👈 Make sure it has || 'secretkey'
+    { expiresIn: '1d' }
+);
+
 // Register Route
 router.post('/signup', async (req, res) => {
   try {
