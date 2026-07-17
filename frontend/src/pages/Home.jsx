@@ -12,22 +12,28 @@ function Home() {
       .catch(err => console.log("Fetch error:", err));
   }, []);
 
-
   const addToCart = async (productId) => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      alert('Please log in to add items to your cart!');
-      return;
-    }
-    try {
-      await axios.post('http://localhost:5000/api/cart/add', { productId, quantity: 1 }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      alert('Product added to cart!');
-    } catch (err) {
-      alert('Failed to add product to cart');
-    }
-  };
+  try {
+    // Get the token from localStorage
+    const token = localStorage.getItem('token'); 
+    
+    // Make the POST request with headers
+    const response = await axios.post(
+      'http://localhost:5000/api/cart/add', 
+      { productId, quantity: 1 }, 
+      { 
+        headers: { 
+          Authorization: `Bearer ${token}` 
+        } 
+      }
+    );
+    
+    alert("Product added to cart successfully!");
+  } catch (err) {
+    console.error(err);
+    alert("Failed to add product to cart");
+  }
+};
 
   return (
     <div style={{ padding: '20px 4%', width: '100%', boxSizing: 'border-box' }}>
