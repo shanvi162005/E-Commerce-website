@@ -22,13 +22,13 @@ const protect = async (req, res, next) => {
 
             next();
         } catch (error) {
-            console.log(" uth Error: Token verification failed:", error.message);
+            console.log(" Auth Error: Token verification failed:", error.message);
             return res.status(401).json({ error: 'Not authorized, token failed' });
         }
     }
 
     if (!token) {
-        console.log("❌ Auth Error: No authorization header / token provided");
+        console.log(" Auth Error: No authorization header / token provided");
         return res.status(401).json({ error: 'Not authorized, no token found' });
     }
 };
