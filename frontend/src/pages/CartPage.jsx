@@ -39,25 +39,44 @@ function CartPage() {
     }, 0);
 
     return (
-        <div style={{ padding: '20px', maxWidth: '600px', margin: 'auto' }}>
-            <h2>My Shopping Cart</h2>
-            {cartItems.length === 0 ? <p>Your cart is empty.</p> : (
+        <div style={{ padding: '20px', maxWidth: '800px', margin: 'auto', color: '#fff' }}>
+            <h2 style={{ textAlign: 'center' }}>My Shopping Cart</h2>
+            {cartItems.length === 0 ? <p style={{ textAlign: 'center' }}>Your cart is empty.</p> : (
                 <div>
                     {cartItems.map(item => (
-                        <div key={item.productId._id} style={{ display: 'flex', justifyContent: 'space-between', margin: '15px 0', borderBottom: '1px solid #eee', paddingBottom: '10px' }}>
-                            <div>
-                                <h4>{item.productId.name}</h4>
-                                <p>Quantity: {item.quantity}</p>
-                                <p>Price: ${item.productId.price}</p>
+                        <div key={item.productId._id} style={{ 
+                            display: 'flex', 
+                            justifyContent: 'space-between', 
+                            alignItems: 'center', // Aligns Remove button vertically with text
+                            margin: '20px 0', 
+                            borderBottom: '1px solid #555', 
+                            paddingBottom: '15px' 
+                        }}>
+                            {/* Left side: Item Details */}
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <h4 style={{ margin: '0 0 5px 0' }}>{item.productId.name}</h4>
+                                <p style={{ margin: '2px 0' }}>Quantity: {item.quantity}</p>
+                                <p style={{ margin: '2px 0' }}>Price: ${item.productId.price}</p>
                             </div>
-                            <button onClick={() => handleRemove(item.productId._id)} style={{ background: 'red', color: 'white', border: 'none', padding: '5px 10px', cursor: 'pointer', alignSelf: 'center' }}>
+                            
+                            {/* Right side: Remove Button */}
+                            <button 
+                                onClick={() => handleRemove(item.productId._id)} 
+                                style={{ 
+                                    background: 'red', 
+                                    color: 'white', 
+                                    border: 'none', 
+                                    padding: '8px 15px', 
+                                    cursor: 'pointer' 
+                                }}
+                            >
                                 Remove
                             </button>
                         </div>
                     ))}
                     
-                    {/* Display Total Price */}
-                    <div style={{ marginTop: '20px', textAlign: 'right', fontSize: '1.2rem', fontWeight: 'bold' }}>
+                    {/* Total Price aligned to the right */}
+                    <div style={{ marginTop: '20px', textAlign: 'right', fontSize: '1.4rem', fontWeight: 'bold' }}>
                         Total Price: ${totalPrice.toFixed(2)}
                     </div>
                 </div>
