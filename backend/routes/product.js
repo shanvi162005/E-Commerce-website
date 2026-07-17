@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Product = require('./product');
+const Product = require('../models/Product');
 const { protect, admin } = require('../middleware/auth');
 
 // Public: Get all products
