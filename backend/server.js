@@ -14,6 +14,7 @@ app.use(cors());
 app.use(express.json()); // Allows parsing of JSON request bodies
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/cart', require('./routes/cart'));
+app.use('/api/products', require('./routes/product'));
 
 // Database Connection
 mongoose.connect(process.env.MONGODB_URI)
