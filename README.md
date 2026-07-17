@@ -28,8 +28,6 @@ Build a full-stack e-commerce platform that allows users to browse products, add
   <img width="1628" height="932" alt="Screenshot 2026-07-17 171256" src="https://github.com/user-attachments/assets/4d33019e-135f-425d-adf0-ca97a834defe" />
   <img width="1566" height="949" alt="Screenshot 2026-07-17 215940" src="https://github.com/user-attachments/assets/6c882789-f211-4285-94c8-77884b142045" />
 * **Add to Cart**
-  <img width="1673" height="660" alt="Screenshot 2026-07-17 215920" src="https://github.com/user-attachments/assets/f08bed56-794c-4d72-b36f-c42e8d8df4fa" />
-
-
+  <img width="1673" height="660" alt="Screenshot 2026-07-17 215920" src="https://github.com/user-attachments/assets/f08bed56-794c-4d72-b36f-c42e8d8df4fa" /> 
    git clone <your-repo-link>
    cd <your-folder-name>
