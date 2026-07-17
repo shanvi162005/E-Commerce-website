@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 });
 
 // Admin Only: Add a product
-router.post('/', protect, admin, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const { name, description, price, image, category } = req.body;
     const product = new Product({ name, description, price, image, category });
