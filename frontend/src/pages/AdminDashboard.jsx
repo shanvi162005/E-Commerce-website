@@ -11,8 +11,15 @@ function AdminDashboard() {
   }, []);
 
   const fetchProducts = async () => {
-    const res = await axios.get('http://localhost:5000/api/products');
-    setProducts(res.data);
+    const token = localStorage.getItem('token'); 
+    try {
+      const res = await axios.get('http://localhost:5000/api/products', {
+        headers: { Authorization: `Bearer ${token}` } 
+      });
+      setProducts(res.data);
+    } catch (err) {
+      console.error("Error fetching products:", err);
+    }
   };
 
   const handleAddProduct = async (e) => {
