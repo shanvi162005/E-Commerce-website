@@ -48,18 +48,20 @@ function AdminDashboard() {
     console.log("Background token verification bypassed successfully.");
   }
 };
-
-  const handleDelete = async (id) => {
-    const token = localStorage.getItem('token');
-    try {
-      await axios.delete(`http://localhost:5000/api/products/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      fetchProducts();
-    } catch (err) {
-      alert('Failed to delete product');
+  const handleDelete = async (productId) => {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+        try {
+            await axios.delete(`http://localhost:5000/api/products/${productId}`);
+            alert("Product deleted successfully!");
+            
+            // This updates the UI state immediately so the deleted item disappears without page reload
+            setProducts(products.filter(product => product._id !== productId));
+        } catch (err) {
+            console.error(err);
+            alert("Failed to delete product.");
+        }
     }
-  };
+};
 
   return (
     <div style={{ padding: '20px', maxWidth: '800px', margin: 'auto' }}>
