@@ -35,7 +35,7 @@ function Home() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>
         {products.map(product => (
           <div key={product._id} style={{ border: '1px solid #ddd', padding: '15px', borderRadius: '8px' }}>
-            <img src={product.image} alt={product.name} style={{ width: '100%', height: '150px', objectFit: 'cover' }} />
+            <img src={product.image} alt={product.name} style={{ width: '100%', height: '180px', objectFit: 'contain', backgroundColor: '#fff', borderRadius: '4px' }} />
             <h3>{product.name}</h3>
             <p>{product.description}</p>
             <p style={{ fontWeight: 'bold' }}>${product.price}</p>
