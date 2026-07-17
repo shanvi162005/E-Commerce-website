@@ -6,29 +6,21 @@ const protect = async (req, res, next) => {
 
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         try {
-            // Extract token
             token = req.headers.authorization.split(' ')[1];
-
-            // Verify using the exact same logic as your login route
             const secret = process.env.JWT_SECRET || 'secretkey';
+            
             const decoded = jwt.verify(token, secret);
-
-            // Find user
             req.user = await User.findById(decoded.id || decoded._id).select('-password');
             
-            if (!req.user) {
-                return res.status(401).json({ error: 'Not authorized, user not found' });
-            }
+            if (!req.user) return res.status(401).json({ error: 'User not found' });
 
             next();
         } catch (error) {
-            console.error("JWT Verification Error:", error.message);
+            console.log("CRITICAL ERROR: JWT Verification failed because:", error.message);
             return res.status(401).json({ error: 'Not authorized, token failed' });
         }
-    }
-
-    if (!token) {
-        return res.status(401).json({ error: 'Not authorized, no token found' });
+    } else {
+        return res.status(401).json({ error: 'No token provided' });
     }
 };
 
