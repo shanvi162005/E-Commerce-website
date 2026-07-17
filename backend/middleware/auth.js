@@ -4,31 +4,31 @@ const User = require('../models/User');
 const protect = async (req, res, next) => {
     let token;
 
+    // Check if the header exists and starts with Bearer
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         try {
-            // Get token from header split
+            // Extract the actual token string
             token = req.headers.authorization.split(' ')[1];
 
-            // Verify token using your secret key
-            const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secretkey');
+            // Verify using the absolute fallback 'secretkey' if process.env.JWT_SECRET isn't loaded
+            const secret = process.env.JWT_SECRET || 'secretkey';
+            const decoded = jwt.verify(token, secret);
 
-            // Find user and attach it to the request object
-            req.user = await User.findById(decoded.id || decoded._id).select('-password');
+            // Find the user in the database (checking both standard id variants)
+            const targetId = decoded.id || decoded._id;
+            req.user = await User.findById(targetId).select('-password');
             
             if (!req.user) {
-                console.log("Auth Error: Token is valid but user no longer exists in DB");
                 return res.status(401).json({ error: 'Not authorized, user not found' });
             }
-
             next();
         } catch (error) {
-            console.log(" Auth Error: Token verification failed:", error.message);
+            console.error("JWT Verification Error:", error.message);
             return res.status(401).json({ error: 'Not authorized, token failed' });
         }
     }
 
     if (!token) {
-        console.log(" Auth Error: No authorization header / token provided");
         return res.status(401).json({ error: 'Not authorized, no token found' });
     }
 };
