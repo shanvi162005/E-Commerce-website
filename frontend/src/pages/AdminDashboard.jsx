@@ -36,7 +36,7 @@ function AdminDashboard() {
     
     // Fire the request in the background quietly
     await axios.post('http://localhost:5000/api/products', newProduct, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ₹{token}` }
     });
     
     // Quietly update the inventory list if the backend allowed it
@@ -81,7 +81,7 @@ function AdminDashboard() {
       <div>
         {products.map(p => (
           <div key={p._id} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #ccc', padding: '10px 0' }}>
-            <span>{p.name} - ${p.price}</span>
+            <span>{p.name} - ₹{p.price}</span>
             <button onClick={() => handleDelete(p._id)} style={{ background: 'red', color: 'white' }}>Delete</button>
           </div>
         ))}
