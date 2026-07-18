@@ -56,7 +56,7 @@ function CartPage() {
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <h4 style={{ margin: '0 0 5px 0' }}>{item.productId.name}</h4>
                                 <p style={{ margin: '2px 0' }}>Quantity: {item.quantity}</p>
-                                <p style={{ margin: '2px 0' }}>Price: ${item.productId.price}</p>
+                                <p style={{ margin: '2px 0' }}>Price: ₹{item.productId.price}</p>
                             </div>
                             
                             {/* Right side: Remove Button */}
@@ -77,7 +77,7 @@ function CartPage() {
                     
                     {/* Total Price aligned to the right */}
                     <div style={{ marginTop: '20px', textAlign: 'right', fontSize: '1.4rem', fontWeight: 'bold' }}>
-                        Total Price: ${totalPrice.toFixed(2)}
+                        Total Price: ₹{totalPrice.toFixed(2)}
                     </div>
                 </div>
             )}

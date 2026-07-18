@@ -53,7 +53,7 @@ function Home() {
             />
             <h3>{product.name}</h3>
             <p>{product.description}</p>
-            <p style={{ fontWeight: 'bold' }}>${product.price}</p>
+            <p style={{ fontWeight: 'bold' }}>₹{product.price}</p>
             <button 
               onClick={() => addToCart(product._id)} 
               style={{ padding: '8px 12px', background: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', width: '100%' }}
